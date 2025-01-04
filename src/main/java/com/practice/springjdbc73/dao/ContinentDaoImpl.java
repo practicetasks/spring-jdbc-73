@@ -107,5 +107,8 @@ public class ContinentDaoImpl implements ContinentDao {
         String name = rs.getString("name");
         return new Continent(id, name);
     }
+
+    // categories                    continents
+    // products                      countries
 }
 
