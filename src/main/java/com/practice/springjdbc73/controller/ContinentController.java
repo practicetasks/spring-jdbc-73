@@ -40,4 +40,14 @@ public class ContinentController {
     public void deleteById(@PathVariable int id) {
         continentDao.deleteById(id);
     }
+
+    @GetMapping("/create100-000")
+    public void create100_000() {
+        continentDao.create100_000();
+    }
+
+    @GetMapping("/create100-000batch")
+    public void create100_000Batch() {
+        continentDao.create100_000Batch();
+    }
 }

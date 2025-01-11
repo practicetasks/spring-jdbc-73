@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,6 +40,7 @@ public class CountryDaoImpl implements CountryDao {
         return jdbcTemplate.query(SELECT, this::mapRow);
     }
 
+    @Transactional
     @Override
     public Country create(Country country) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
@@ -52,6 +54,11 @@ public class CountryDaoImpl implements CountryDao {
 
         int id = insert.executeAndReturnKey(map).intValue();
         country.setId(id);
+
+        for (Integer languageId : country.getLanguages()) {
+            String sql = "insert into countries_languages (country_id, language_id) values (?, ?)";
+            jdbcTemplate.update(sql, country.getId(), languageId);
+        }
 
         return country;
     }

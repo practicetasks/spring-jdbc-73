@@ -15,4 +15,8 @@ public interface ContinentDao {
     Continent update(Continent continent);
 
     void deleteById(int id);
+
+    void create100_000();
+
+    void create100_000Batch();
 }
